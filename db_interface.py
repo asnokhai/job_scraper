@@ -12,9 +12,16 @@ class DBInterface:
             CREATE TABLE IF NOT EXISTS seen_jobs (
                 url TEXT PRIMARY KEY,
                 title TEXT,
-                date_found TEXT
+                date_found TEXT,
+                company TEXT,
+                location TEXT
             )
         """)
+        # Migrate existing DBs that are missing the new columns
+        existing = {row[1] for row in self.conn.execute("PRAGMA table_info(seen_jobs)")}
+        for col, typedef in [("company", "TEXT"), ("location", "TEXT")]:
+            if col not in existing:
+                self.conn.execute(f"ALTER TABLE seen_jobs ADD COLUMN {col} {typedef}")
         self.conn.commit()
 
     def get_seen_urls(self):
@@ -23,8 +30,8 @@ class DBInterface:
 
     def save_jobs(self, jobs):
         self.conn.executemany(
-            "INSERT OR IGNORE INTO seen_jobs (url, title, date_found) VALUES (?, ?, ?)",
-            [(j.url, j.title, j.date_found) for j in jobs],
+            "INSERT OR IGNORE INTO seen_jobs (url, title, date_found, company, location) VALUES (?, ?, ?, ?, ?)",
+            [(j.url, j.title, j.date_found, j.company, j.location) for j in jobs],
         )
         self.conn.commit()
 

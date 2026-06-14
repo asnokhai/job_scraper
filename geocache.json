@@ -1,0 +1,66 @@
+{
+  "Mooresville, NC": {
+    "lat": 35.5848596,
+    "lng": -80.8100724
+  },
+  "Frankfurt am Main": {
+    "lat": 50.1106444,
+    "lng": 8.6820917
+  },
+  "Silverstone, Towcester NN12, UK": {
+    "lat": 52.0796897,
+    "lng": -1.0152832
+  },
+  "Concord, NC": {
+    "lat": 35.4094178,
+    "lng": -80.5800049
+  },
+  "Grove, Wantage OX12, UK": {
+    "lat": 51.592195,
+    "lng": -1.4239028
+  },
+  "Huntersville, NC 28078": {
+    "lat": 35.4108278,
+    "lng": -80.8429304
+  },
+  "Signes": {
+    "lat": 43.2908597,
+    "lng": 5.8636703
+  },
+  "Kidlington, UK": {
+    "lat": 51.823462,
+    "lng": -1.2885317
+  },
+  "Banbury, UK": {
+    "lat": 52.0601807,
+    "lng": -1.3402795
+  },
+  "East London, UK": {
+    "lat": 51.5073682,
+    "lng": 0.0656624
+  },
+  "Ashchurch, Tewkesbury GL20, UK": {
+    "lat": 51.9986019,
+    "lng": -2.1068884
+  },
+  "Weissach": {
+    "lat": 48.8467574,
+    "lng": 8.9273862
+  },
+  "Prague": {
+    "lat": 50.0874654,
+    "lng": 14.4212535
+  },
+  "Bietigheim-Bissingen": {
+    "lat": 48.9493243,
+    "lng": 9.1364229
+  },
+  "Detroit": {
+    "lat": 42.3315509,
+    "lng": -83.0466403
+  },
+  "Ludwigsburg": {
+    "lat": 48.8953937,
+    "lng": 9.1895147
+  }
+}
