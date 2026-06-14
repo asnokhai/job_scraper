@@ -15,28 +15,21 @@ KEYWORDS = [
     "motion system",
 ]
 
+scraper = MotorsportsJobsScraper(KEYWORDS)
 
-def main():
-    scraper = MotorsportsJobsScraper(KEYWORDS)
+with DBInterface(DB_PATH) as db:
+    seen_urls = db.get_seen_urls()
+    all_jobs = scraper.get_all_jobs()
 
-    with DBInterface(DB_PATH) as db:
-        seen_urls = db.get_seen_urls()
-        all_jobs = scraper.get_all_jobs()
+    new_jobs = [j for j in all_jobs if j.url not in seen_urls]
 
-        new_jobs = [j for j in all_jobs if j.url not in seen_urls]
+    if not new_jobs:
+        print("\nNo new jobs since last run.")
+    else:
+        print(f"\n{'='*60}")
+        print(f"  {len(new_jobs)} NEW JOB(S) FOUND")
+        print(f"{'='*60}\n")
+        for job in new_jobs:
+            print(job)
+        db.save_jobs(new_jobs)
 
-        if not new_jobs:
-            print("\nNo new jobs since last run.")
-        else:
-            print(f"\n{'='*60}")
-            print(f"  {len(new_jobs)} NEW JOB(S) FOUND")
-            print(f"{'='*60}\n")
-            for job in new_jobs:
-                print(f"  {job.title}")
-                print(f"  {job.url}")
-                print()
-            db.save_jobs(new_jobs)
-
-
-if __name__ == "__main__":
-    main()
