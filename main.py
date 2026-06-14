@@ -1,7 +1,7 @@
 import numpy as np
 
-from motorsports_jobs_scraper import MotorsportsJobsScraper
-from porsche_scraper import PorscheScraper
+from scrapers.motorsports_jobs_scraper import MotorsportsJobsScraper
+from scrapers.porsche_scraper import PorscheScraper
 from db_interface import DBInterface
 
 DB_PATH = "jobs.db"
