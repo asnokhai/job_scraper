@@ -24,7 +24,7 @@ class DBInterface:
     def save_jobs(self, jobs):
         self.conn.executemany(
             "INSERT OR IGNORE INTO seen_jobs (url, title, date_found) VALUES (?, ?, ?)",
-            [(j["url"], j["title"], j["date_found"]) for j in jobs],
+            [(j.url, j.title, j.date_found) for j in jobs],
         )
         self.conn.commit()
 
