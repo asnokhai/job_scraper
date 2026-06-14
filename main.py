@@ -1,4 +1,7 @@
+import numpy as np
+
 from motorsports_jobs_scraper import MotorsportsJobsScraper
+from porsche_scraper import PorscheScraper
 from db_interface import DBInterface
 
 DB_PATH = "jobs.db"
@@ -15,12 +18,16 @@ KEYWORDS = [
     "motion system",
 ]
 
-scraper = MotorsportsJobsScraper(KEYWORDS)
+motorsports_jobs_scraper = MotorsportsJobsScraper(KEYWORDS)
+porsche_scraper = PorscheScraper(KEYWORDS)
 
 with DBInterface(DB_PATH) as db:
     seen_urls = db.get_seen_urls()
-    all_jobs = scraper.get_all_jobs()
 
+    all_jobs_motorsports_jobs = motorsports_jobs_scraper.get_all_jobs()
+    all_porsche_jobs = porsche_scraper.get_all_jobs()
+
+    all_jobs = np.concatenate([all_jobs_motorsports_jobs, all_porsche_jobs])
     new_jobs = [j for j in all_jobs if j.url not in seen_urls]
 
     if not new_jobs:
