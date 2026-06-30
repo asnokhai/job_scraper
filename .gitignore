@@ -1,0 +1,5 @@
+*.db
+geocache.json
+__pycache__/
+*.pyc
+.idea/
