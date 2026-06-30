@@ -16,6 +16,7 @@ KEYWORDS = [
     "washout",
     "HIL",
     "motion system",
+    "junior"
 ]
 
 motorsports_jobs_scraper = MotorsportsJobsScraper(KEYWORDS)

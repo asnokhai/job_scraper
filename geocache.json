@@ -62,5 +62,89 @@
   "Ludwigsburg": {
     "lat": 48.8953937,
     "lng": 9.1895147
+  },
+  "Oxfordshire, UK": {
+    "lat": 51.833333,
+    "lng": -1.25
+  },
+  "County Armagh, UK": {
+    "lat": 54.3021554,
+    "lng": -6.6127366
+  },
+  "Buckinghamshire, UK": {
+    "lat": 51.840894,
+    "lng": -0.8998074
+  },
+  "London, UK": {
+    "lat": 51.5074456,
+    "lng": -0.1277653
+  },
+  "Birmingham, UK": {
+    "lat": 52.4948994,
+    "lng": -1.8518439
+  },
+  "Leeds, UK": {
+    "lat": 53.7974185,
+    "lng": -1.5437941
+  },
+  "Little Stanney, Chester, UK": {
+    "lat": 53.2609705,
+    "lng": -2.8821838
+  },
+  "Reading, UK": {
+    "lat": 51.4564242,
+    "lng": -0.9700664
+  },
+  "Great Bardfield, Braintree CM7, UK": {
+    "lat": null,
+    "lng": null
+  },
+  "Nottingham, UK": {
+    "lat": 52.9534193,
+    "lng": -1.1496461
+  },
+  "Woking, UK": {
+    "lat": 51.3201891,
+    "lng": -0.5564726
+  },
+  "Epsom, UK": {
+    "lat": 51.3326098,
+    "lng": -0.2678212
+  },
+  "Mansfield, UK": {
+    "lat": 53.1443785,
+    "lng": -1.1964165
+  },
+  "Guildford, UK": {
+    "lat": 51.2356068,
+    "lng": -0.5732063
+  },
+  "Bromley, UK": {
+    "lat": 51.4028046,
+    "lng": 0.0148142
+  },
+  "Newcastle upon Tyne, UK": {
+    "lat": 54.9738474,
+    "lng": -1.6131572
+  },
+  "Newark-on-Trent, Newark NG24, UK": {
+    "lat": 53.0761693,
+    "lng": -0.8092339
+  },
+  "Bristol, UK": {
+    "lat": 51.4538022,
+    "lng": -2.5972985
+  },
+  "Cluj": {
+    "lat": 46.769379,
+    "lng": 23.5899542
+  },
+  "Stuttgart": {
+    "lat": 48.7784485,
+    "lng": 9.1800132
+  },
+  "M\u00f6nsheim": {
+    "lat": 48.8638462,
+    "lng": 8.8636568
   }
 }
