@@ -19,16 +19,22 @@ KEYWORDS = [
     "junior"
 ]
 
-motorsports_jobs_scraper = MotorsportsJobsScraper(KEYWORDS)
-porsche_scraper = PorscheScraper(KEYWORDS)
+scrapers = [
+    MotorsportsJobsScraper(KEYWORDS),
+    PorscheScraper(KEYWORDS),
+]
 
 with DBInterface(DB_PATH) as db:
     seen_urls = db.get_seen_urls()
 
-    all_jobs_motorsports_jobs = motorsports_jobs_scraper.get_all_jobs()
-    all_porsche_jobs = porsche_scraper.get_all_jobs()
+    results = []
+    for scraper in scrapers:
+        try:
+            results.append(scraper.get_all_jobs())
+        except Exception as e:
+            print(f"[ERROR] {scraper.__class__.__name__} failed: {e}")
 
-    all_jobs = np.concatenate([all_jobs_motorsports_jobs, all_porsche_jobs])
+    all_jobs = np.concatenate(results) if results else np.array([])
     new_jobs = [j for j in all_jobs if j.url not in seen_urls]
 
     if not new_jobs:
