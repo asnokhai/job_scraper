@@ -1,5 +1,6 @@
 import httpx
 import json
+import time
 import numpy as np
 from datetime import date
 from job import Job
@@ -13,6 +14,7 @@ HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
 }
 COUNT_PER_PAGE = 20
+MAX_RETRIES = 3
 
 
 class PorscheScraper:
@@ -37,33 +39,39 @@ class PorscheScraper:
             "LanguageCode": "EN",
         }
 
-    def _fetch_page(self, first_item: int) -> dict:
+    def _fetch_page(self, client: httpx.Client, first_item: int) -> dict:
         payload = self._build_payload(first_item, COUNT_PER_PAGE)
-        r = httpx.get(
-            API_URL,
-            params={"data": json.dumps(payload)},
-            headers=HEADERS,
-            timeout=30,
-        )
-        r.raise_for_status()
-        return r.json()
+        for attempt in range(MAX_RETRIES):
+            try:
+                r = client.get(
+                    API_URL,
+                    params={"data": json.dumps(payload)},
+                    timeout=30,
+                )
+                r.raise_for_status()
+                return r.json()
+            except (httpx.ConnectError, httpx.TimeoutException) as e:
+                if attempt == MAX_RETRIES - 1:
+                    raise
+                wait = 2 ** attempt
+                print(f"  [WARN] Page {first_item}: {e} — retrying in {wait}s")
+                time.sleep(wait)
 
     def _matches_keywords(self, title: str) -> bool:
         title_lower = title.lower()
         return any(kw.lower() in title_lower for kw in self.keywords)
 
     def get_all_jobs(self) -> np.ndarray:
-        # First request to get total count
-        first_page = self._fetch_page(1)
-        total = first_page["SearchResult"]["SearchResultCountAll"]
-        print(f"  Total Porsche jobs: {total}")
+        with httpx.Client(headers=HEADERS) as client:
+            first_page = self._fetch_page(client, 1)
+            total = first_page["SearchResult"]["SearchResultCountAll"]
+            print(f"  Total Porsche jobs: {total}")
 
-        all_items = first_page["SearchResult"]["SearchResultItems"]
+            all_items = first_page["SearchResult"]["SearchResultItems"]
 
-        # Paginate through the rest
-        for first_item in range(COUNT_PER_PAGE + 1, total + 1, COUNT_PER_PAGE):
-            page = self._fetch_page(first_item)
-            all_items.extend(page["SearchResult"]["SearchResultItems"])
+            for first_item in range(COUNT_PER_PAGE + 1, total + 1, COUNT_PER_PAGE):
+                page = self._fetch_page(client, first_item)
+                all_items.extend(page["SearchResult"]["SearchResultItems"])
 
         print(f"  Fetched {len(all_items)} jobs")
 
